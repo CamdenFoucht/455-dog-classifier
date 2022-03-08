@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bird Classifier Project</title>
+    <title>Dog Classification Project</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +16,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+        <link rel="icon" type="image/x-icon" href="./favicon.ico">
 
 <body>
     <header class="header">
@@ -36,7 +37,12 @@
 
         </div>
     </header>
+
     <main class="container">
+        <p class="section-text" style="margin-top: 3rem;">
+            The code for building our model can be found on this <a class="link" href="https://colab.research.google.com/drive/1GomG8GxtTg6NCnP06Kl2pIZRXxcI84k9?usp=sharing#scrollTo=-gY232ZgWkAE">Google Colab Notebook</a> and the Simple UI can be found on 
+            <a class="link" href="https://ml-dog-breed-classifier.herokuapp.com/">ml-dog-breed-classifier.herokuapp.com</a>. The UI repo for the heroku flask app can be found here on <a class="link" href="https://github.com/CamdenFoucht/dog-classifier">GitHub</a>.
+        </p>
         <section>
             <h2 class="section-header">
                 Project Video
@@ -111,17 +117,26 @@
                 <br /></br>
                 The images contained within the dataset were not sized the same, and because we wanted to use a CNN model we needed to ensure they had the same dimensions. Pytorch's ImageFolder method 
                 takes a transform argument which transforms each image in the folder. We use Pytorch's Compose utility to transform each image into a Tensor and then resized the image to 256x256 pixels.
-                <div style="display: flex; align-items: center;">
-                    <div>
-                        <h3>Before</h3>
-                        <img src="./dog-before.png" class="resize-img"/>
-                    </div>
-                    <div>
-                        <h3>After</h3>
-                        <img src="./dog-before.png" class="resize-img"/>
-                    </div>
-                </div>
+
             </p>
+            <div style="display: flex;">
+                <div style="margin-right: 5rem;">
+                    <h3>Before (500 x 333)</h3>
+                    <img src="http://vision.stanford.edu/aditya86/ImageNetDogs/images/n02106662-German_shepherd/n02106662_18405.jpg" />
+                </div>
+                <div>
+                    <h3>After (256 x 256)</h3>
+                    <img src="http://vision.stanford.edu/aditya86/ImageNetDogs/images/n02106662-German_shepherd/n02106662_18405.jpg" style="width: 256px; height: 256px; object-fit:cover; object-position: center;"/>
+                </div>
+            </div>
+            <p class="section-text">
+                We also performed random rotations on our training dataset to let our model be rotation invariant. With our Pytorch compose method, we used a random rotate on the images on the training dataset so or CNN will be fed randomly rotated images. Here is an example of a rotated image from the transformed training dataset.
+            </p>
+            <div style="display: flex; align-items: center;">
+                <div>
+                    <img src="./dog-before.png" class="resize-img"/>
+                </div>
+            </div>
         </section>
 
         <section>
@@ -136,6 +151,7 @@
                 Following some references we found online, we needed to create an ImageClassificationBase class which would be a super class of the pretrained model. We then created a class PretrainedResnetModel in which we overwrote the last layer in the model. We use a sequential layer where we took in the previous layer output and outputted 120 (the number of dog breeds). We then took the LogSoftMax to convert the output into a probability distribution.
 
             </p>
+            <img style="width: 100%" src="https://miro.medium.com/max/1400/1*DBACwWr95eCibSw2EmzhVw.png" />
         </section>
         
 
@@ -150,10 +166,11 @@
             <img class="batch-img" src="./batch.png"/>
 
             <p class="section-text">
-                We had to choose several parameters when training our model such as the learning rate, epochs, weight decay, and an optimization function. We decided to use a trial and error approach to determine what parameters we should use. We put the results of our investigation into the table below. 
+                We had to choose several parameters when training our model such as the learning rate, epochs, weight decay, and an optimization function. We decided to use a trial and error approach to determine what parameters we should use. We put the results of our investigation into the tables below. 
             </p>
             <table>
                 <thead>
+                    <th>Model</th>
                     <th>Num Epochs</th>
                     <th>Learning Rate</th>
                     <th>Weight Decay</th>
@@ -162,42 +179,40 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td>ResNet-50</td>
                         <td>5</td>
                         <td>0.1</td>
                         <td>0.0001</td>
                         <td>torch.optim.SGD</td>
-                        <td>90%</td>
+                        <td>65.9%</td>
                     </tr>
                     <tr>
+                        <td>ResNet-50</td>
                         <td>5</td>
-                        <td>0.1</td>
+                        <td>0.01</td>
                         <td>0.0001</td>
                         <td>torch.optim.SGD</td>
-                        <td>81%</td>
+                        <td>80.77%</td>
                     </tr>
                     <tr>
+                        <td>ResNet-50</td>
                         <td>5</td>
-                        <td>0.1</td>
+                        <td>0.001</td>
                         <td>0.0001</td>
                         <td>torch.optim.SGD</td>
-                        <td>88%</td>
+                        <td>78.43%</td>
                     </tr>
                     <tr>
+                        <td>ResNet-50</td>
                         <td>5</td>
-                        <td>0.1</td>
+                        <td>0.0001</td>
                         <td>0.0001</td>
                         <td>torch.optim.SGD</td>
-                        <td>83%</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>0.1</td>
-                        <td>0.0001</td>
-                        <td>torch.optim.SGD</td>
-                        <td>85%</td>
+                        <td>25.53%</td>
                     </tr>
                 </tbody>
             </table>
+            <img src="./learning-rate-graph.png" style="margin-top: 1rem; width: 100%" alt="">
             <p class="section-text">
                 After our trial and error sessions, we decided to start our parameters at with a learning rate of <strong>0.01</strong>, a weight decay of <strong>0.0001</strong>, and a <strong>torch.optim.SGD</strong> optomizer. After running 15 epochs, our accuracy rate was at 88%.
 
@@ -209,7 +224,7 @@
                 Trying Other Models
             </h2>
             <p class="section-text">
-               We decided to try three other models to compare our results with. We chose GoogleNet, VGG16, InceptionV3 to test. After hours of training we have put the results in a table below.
+               We decided to try four other models to compare our results with. We chose GoogleNet, VGG16, Wide Resnet-50, and Resnet-100 to test. After hours of training we have put the results in a table below.
             </p>
 
             <p class="section-text">
@@ -223,29 +238,36 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>ResNet50</td>
+                        <td>ResNet-50</td>
                         <td>10</td>
-                        <td>90%</td>
+                        <td>82%</td>
+                    </tr>
+                    <tr>
+                        <td>Wide Resnet-50</td>
+                        <td>10</td>
+                        <td>85.12%</td>
+                    </tr>
+                    <tr>
+                        <td>Resnet-100</td>
+                        <td>10</td>
+                        <td>81.4%</td>
                     </tr>
                     <tr>
                         <td>GoogleNet</td>
                         <td>10</td>
-                        <td>81%</td>
+                        <td>77.4%</td>
                     </tr>
                     <tr>
                         <td>VGG16</td>
                         <td>10</td>
-                        <td>88%</td>
-                    </tr>
-                    <tr>
-                        <td>InceptionV3</td>
-                        <td>10</td>
-                        <td>83%</td>
-                    </tr>
+                        <td>76.3%</td>
+                    </tr>                
                 </tbody>
             </table>
+            <img src="./model-acc.png" style="width: 100%"/>
+            <img src="./model-loss.png" style="width: 100%; margin-top: 2rem;"/>
             <p class="section-text">
-                After these tests, our best performing model was ___________
+                After these tests, our best performing model was the wide resnet-50 pretrained model with a validation accuracy of 85% after just 10 epochs. We can see after the first epoch it was already in the 70's for it's accuracy percentage. Meanwhile the VGG16 model and GoogleNet models started much lower around 30-40% but quickly rose to the 70's after 8 epochs. We decided to stick with the <strong>wide resnet-50</strong> model for further training. 
             </p>
         </section>
 
@@ -262,6 +284,18 @@
 
         <section>
             <h2 class="section-header">
+                Simple Web Deployment
+            </h2>
+            <p class="section-text">
+                While we had our model on Google colab, we wanted users to be able to interact with our model and load their own images to test. We decided to use Flask to deploy a simple web server on Heroku to host our model logic. We built a very simple UI that allows a user to provide a link to an image or upload their own image. The image will then be sent to our model and it will make a prediction.
+                <br/><br/>
+                We had to figure out how to host our model on Heroku without requiring a user to download large files when loading a web app. We decided to train a web specific model using densenet which was only 20mb in syze compared to 260 mb from the resnet model. We then used the pickle library to serialize and compress our model that heroku could then load. We also ran into memory errors trying this due to Pytorch's library being too large. We solved this by finding a cpu specific Pytorch library which reduce the server size by several hundred mb. With these fixes we were able to deploy a very simple web version of our model, which you can see below. 
+            </p>
+
+            <img src="./web-example.png" class="web-example-img" alt="Example of the heroku web app"/>
+        </section>
+        <section>
+            <h2 class="section-header">
                 Dicussion
             </h2>
             <p class="section-text">
@@ -270,13 +304,25 @@
                     <p class="section-text">
                         When we first started we loaded a pretrained model and didn't realize we needed to replace the last layer in the model. This led us to looking through StackOverflow until we realized we needed to overwrite the last layer.
                     </p>
+                    <p class="section-text">
+                        We also ran into ours during our model building/training process because our images weren't the same size. We had to research how we could resize the entire dataset to get our CNN to function, and we had to discover the Pytorch transform resize() method to do this.
+                    </p>
+                    <p class="section-text">
+                        Memory errors. We often ran into cuda memory errors due to bad parameters or batches that were too big. This led to us refining our parameters often.
+                    </p>
                 </div>
                 <h3>Next Steps</h3>
                 <div class="pad-left">
                     <p class="section-text">
-                        Our next steps would be to create a UI for users where they could upload their own images, and we could run our model on the image and predict the dog breed. We could create a User Interface using Flask, and also train our model on any image uploads we receive. Allowing us to improve our model and help people discover what dog they saw.
+                        Our next steps would be to expand the UI so the images users provided would also train the model. We could create functionality for a user to provide what the real label of the dog was if they know, or provide an input for saying if the prediction was correct. Our web version also uses a slightly lower accuracy model due to a smaller file size on the Heroku free tier. We would like to use our stronger models in a webapp so we can have higher accuracies.
                     </p>
-                </div>              
+                </div>   
+                <h3>Takeaways</h3>
+                <div class="pad-left">
+                    <p class="section-text">
+                        Overall, this project was full of learning. We got experience cleaning data with python, creating datasets, discovering new models, and learning about how to finetune parameters. We learned about the utilties of the Pytorch library and how to quickly build a ML model using their pretrained models. We also gained experience with Flask and deployments, and how to compress fully built models into a pickle format for deployment.
+                    </p>
+                </div>                
             </p>
         </section>
         <section>

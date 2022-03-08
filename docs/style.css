@@ -130,6 +130,10 @@ tr:nth-child(even) {
     /* background-color: #eee; */
 }
 
+td {
+    color: rgb(102, 102, 102);
+}
+
 .d-block {
     display: block;
 }
