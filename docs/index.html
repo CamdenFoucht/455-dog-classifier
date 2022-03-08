@@ -85,7 +85,15 @@
                 Our Approach
             </h2>
             <p class="section-text">
-                Our approach is to leverage the Pytorch library by using the utility functions for creating datasets like ImageFolder, DataLoader, Image Tensors, Transforms and more. We also want to utilize their pretrained models so we can hit the floor running with our dog breed classifications. By leveraging a pretrained model we can take advantage of a model that has already been trained on over a million images and specially crafted model layers. We will spend more of our time fine tuning the model by focusing on selecting the correct parameters and preparing the data to perform the dog classification training.
+                Our approach is to leverage the Pytorch library by using the utility functions for creating datasets like ImageFolder, DataLoader, Image Tensors, Transforms and more. We also want to utilize their pretrained models so we can hit the floor running with our dog breed classifications. By leveraging a pretrained model we can take advantage of a model that has already been trained on over a million images and specially crafted model layers. We will spend more of our time fine tuning the model by focusing on selecting the correct parameters and preparing the data to perform the dog classification training. While we build our model from scratch on Google Colab, we used several references when deciding how to construct DataLoaders and setting up a ImageClassificationBase class. 
+                These sources include the medium articles:
+                <a class="link my-1" href="https://medium.com/@ankitvashisht12/classifying-dog-breed-using-pytorch-abc9f3c5128a">
+                    Dog Classifiers with PyTorch
+                </a>  and 
+                <a class="link my-1" href="https://medium.com/bitgrit-data-science-publication/building-an-image-classification-model-with-pytorch-from-scratch-f10452073212">
+                    Building an Image Classification Model From Scratch Using PyTorch
+                </a> 
+                . We didn't want to reinvent the wheel and go through the pain of figuring out all of the inner-outs of PyTorch ourselves. So when we constructed our model we used their implementations as a reference so we could focus more on changing the models and parameters to get our desired accuracy rates. 
             </p>
         </section>
 
@@ -174,7 +182,6 @@
                     <th>Num Epochs</th>
                     <th>Learning Rate</th>
                     <th>Weight Decay</th>
-                    <th>Optimization Function</th>
                     <th>Accuracy</th>
                 </thead>
                 <tbody>
@@ -183,7 +190,6 @@
                         <td>5</td>
                         <td>0.1</td>
                         <td>0.0001</td>
-                        <td>torch.optim.SGD</td>
                         <td>65.9%</td>
                     </tr>
                     <tr>
@@ -191,7 +197,6 @@
                         <td>5</td>
                         <td>0.01</td>
                         <td>0.0001</td>
-                        <td>torch.optim.SGD</td>
                         <td>80.77%</td>
                     </tr>
                     <tr>
@@ -199,7 +204,6 @@
                         <td>5</td>
                         <td>0.001</td>
                         <td>0.0001</td>
-                        <td>torch.optim.SGD</td>
                         <td>78.43%</td>
                     </tr>
                     <tr>
@@ -207,15 +211,56 @@
                         <td>5</td>
                         <td>0.0001</td>
                         <td>0.0001</td>
-                        <td>torch.optim.SGD</td>
                         <td>25.53%</td>
                     </tr>
                 </tbody>
             </table>
             <img src="./learning-rate-graph.png" style="margin-top: 1rem; width: 100%" alt="">
-            <p class="section-text">
-                After our trial and error sessions, we decided to start our parameters at with a learning rate of <strong>0.01</strong>, a weight decay of <strong>0.0001</strong>, and a <strong>torch.optim.SGD</strong> optomizer. After running 15 epochs, our accuracy rate was at 88%.
+            <div class="section-text">We tried fine tuning the weight decay over five epochs, but we didn't find any standouts. So we went with the best performing decay of 0.00001.</div>
+            <table>
+                <thead>
+                    <th>Model</th>
+                    <th>Num Epochs</th>
+                    <th>Learning Rate</th>
+                    <th>Weight Decay</th>
+                    <th>Accuracy</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ResNet-50</td>
+                        <td>5</td>
+                        <td>0.01</td>
+                        <td>0.001</td>
+                        <td>81.77%</td>
+                    </tr>
+                    <tr>
+                        <td>ResNet-50</td>
+                        <td>5</td>
+                        <td>0.01</td>
+                        <td>0.0001</td>
+                        <td>82.37%</td>
+                    </tr>
+                    <tr>
+                        <td>ResNet-50</td>
+                        <td>5</td>
+                        <td>0.01</td>
+                        <td>0.0001</td>
+                        <td>82.19%</td>
+                    </tr>
+                    <tr>
+                        <td>ResNet-50</td>
+                        <td>5</td>
+                        <td>0.01</td>
+                        <td>0.00001</td>
+                        <td>83.71%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <img src="./weight-decay.png" style="margin-top: 1rem; width: 100%" alt="">
 
+            <p class="section-text">
+                After our trial and error sessions, we decided to start our parameters at with a learning rate of <strong>0.01</strong>, a weight decay of <strong>0.0001</strong>. After running 15 epochs, our accuracy rate was at 88%.
+                
             </p>
         </section>
 
@@ -276,10 +321,12 @@
                 Results
             </h2>
             <p class="section-text">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus vel omnis sint laborum officiis
-                consequatur neque atque soluta, ducimus rerum, itaque aliquam earum corrupti, explicabo eveniet ex
-                deserunt sunt quaerat!
+                Now that we had narrowed down our model to <strong>wide resnet-50</strong>. We performed a series of training sessions on the model with varying epochs. We had gotten our model up to a ___% accurracy and now we tested it. We used our testing dataset consisting of 5300 images and achieved a 86% accuracy rate.  
+                <br/></br>
+                We can visualize our model making predictions in the image grid below. We can see that the model correctly predicted each of the below dog breeds in the images below. It can event predict dog breeds when images have other objects like humans. 
             </p>
+
+            <p class="section-text">Now that we were happy about how we tuned and trained the model, we wanted to make it accessible people to choose their own images for our model predictions.</p>
         </section>
 
         <section>
@@ -287,9 +334,10 @@
                 Simple Web Deployment
             </h2>
             <p class="section-text">
-                While we had our model on Google colab, we wanted users to be able to interact with our model and load their own images to test. We decided to use Flask to deploy a simple web server on Heroku to host our model logic. We built a very simple UI that allows a user to provide a link to an image or upload their own image. The image will then be sent to our model and it will make a prediction.
+                While we had our model on Google Colab, we wanted users to be able to interact with our model and load their own images to test. We decided to use Flask to deploy a simple web server on Heroku to host our model logic. We built a very simple UI that allows a user to provide a link to an image or upload their own image. The image will then be sent to our model and it will make a prediction.
                 <br/><br/>
-                We had to figure out how to host our model on Heroku without requiring a user to download large files when loading a web app. We decided to train a web specific model using densenet which was only 20mb in syze compared to 260 mb from the resnet model. We then used the pickle library to serialize and compress our model that heroku could then load. We also ran into memory errors trying this due to Pytorch's library being too large. We solved this by finding a cpu specific Pytorch library which reduce the server size by several hundred mb. With these fixes we were able to deploy a very simple web version of our model, which you can see below. 
+                We had to figure out how to host our model on Heroku without requiring a user to download large files when loading a web app. We decided to train a web specific model using densenet which was only 20mb in syze compared to 260 mb from the resnet model. Because of this, the web accuracy model would only be 79% instead of the __% we achieved using wide resnet. We then used the pickle library to serialize and compress our model that heroku could then load. We also ran into memory errors trying this due to Pytorch's library being too large. We solved this by finding a cpu specific Pytorch library which reduce the server size by several hundred mb. With these fixes we were able to deploy a very simple web version of our model, which you can see below. 
+                You can visit the site on <a class="link" href="https://ml-dog-breed-classifier.herokuapp.com/">ml-dog-breed-classifier.herokuapp.com</a>.
             </p>
 
             <img src="./web-example.png" class="web-example-img" alt="Example of the heroku web app"/>
@@ -327,12 +375,22 @@
         </section>
         <section>
             <h2 class="section-header">
-                References
+                References and Resources
             </h2>
-                <a class="link d-block my-1" href="#">Some Link Here</a>  
-                <a class="link d-block my-1" href="#">Some Link Here</a>  
-                <a class="link d-block my-1" href="#">Some Link Here</a>  
-                <a class="link d-block my-1" href="#">Some Link Here</a>  
+            <div style="display: flex; flex-direction: column">
+                <a class="link my-1" href="https://pytorch.org/docs/stable/index.html">PyTorch Documentation</a>  
+                <a class="link my-1" href="https://matplotlib.org/stable/users/index.html">MatPlotLib Documentation</a>  
+                <a class="link my-1" href="https://www.kaggle.com/jessicali9530/stanford-dogs-dataset">Kaggle - Stanford Dog Dataset</a>  
+                <a class="link my-1" href="https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html">
+                    PyTorch Cifar Classifier Tutorial</a>  
+                </a>  
+                <a class="link my-1" href="https://medium.com/@ankitvashisht12/classifying-dog-breed-using-pytorch-abc9f3c5128a">
+                    Dog Classifiers with PyTorch
+                </a>  
+                <a class="link my-1" href="https://medium.com/bitgrit-data-science-publication/building-an-image-classification-model-with-pytorch-from-scratch-f10452073212">
+                    Building an Image Classification Model From Scratch Using PyTorch
+                </a>
+            </div>
 
         </p>
         </section>
