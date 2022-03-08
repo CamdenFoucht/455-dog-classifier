@@ -24,7 +24,7 @@
             <div class="header-row">
                 <div class="header-row-item">
                     <h1 class="header-title">Classifying Dog Breeds</h1>
-                    <p class="header-p">A writeup on the problem, approach, datasets, and results classifying dogs with Pytorch.</p>
+                    <p class="header-p">A writeup on the problem, approach, datasets, and results classifying dogs with PyTorch.</p>
                     <p class="header-p">By Yodahe and Camden</p>
                 </div>
                 <div class="header-right">
@@ -85,7 +85,7 @@
                 Our Approach
             </h2>
             <p class="section-text">
-                Our approach is to leverage the Pytorch library by using the utility functions for creating datasets like ImageFolder, DataLoader, Image Tensors, Transforms and more. We also want to utilize their pretrained models so we can hit the floor running with our dog breed classifications. By leveraging a pretrained model we can take advantage of a model that has already been trained on over a million images and specially crafted model layers. We will spend more of our time fine tuning the model by focusing on selecting the correct parameters and preparing the data to perform the dog classification training. While we build our model from scratch on Google Colab, we used several references when deciding how to construct DataLoaders and setting up a ImageClassificationBase class. 
+                Our approach is to leverage the PyTorch library by using the utility functions for creating datasets like ImageFolder, DataLoader, Image Tensors, Transforms and more. We also want to utilize their pretrained models so we can hit the floor running with our dog breed classifications. By leveraging a pretrained model we can take advantage of a model that has already been trained on over a million images and specially crafted model layers. We will spend more of our time fine tuning the model by focusing on selecting the correct parameters and preparing the data to perform the dog classification training. While we build our model from scratch on Google Colab, we used several references when deciding how to construct DataLoaders and setting up a ImageClassificationBase class. 
                 These sources include the medium articles:
                 <a class="link my-1" href="https://medium.com/@ankitvashisht12/classifying-dog-breed-using-pytorch-abc9f3c5128a">
                     Dog Classifiers with PyTorch
@@ -118,13 +118,13 @@
                 </code>
                 <br />
                 The dataset did not come with train, valid, and test folders so we had to create our own. We chose to
-                use 25% of the images in the dataset as testing images, and leveraged Pytorch's random_split method to
+                use 25% of the images in the dataset as testing images, and leveraged PyTorch's random_split method to
                 create a test dataset consisting of 5300 images, a valid dataset consisting of 1440 images, and train
                 dataset consisting of 13840 images.
 
                 <br /></br>
                 The images contained within the dataset were not sized the same, and because we wanted to use a CNN model we needed to ensure they had the same dimensions. Pytorch's ImageFolder method 
-                takes a transform argument which transforms each image in the folder. We use Pytorch's Compose utility to transform each image into a Tensor and then resized the image to 256x256 pixels.
+                takes a transform argument which transforms each image in the folder. We use PyTorch's Compose utility to transform each image into a Tensor and then resized the image to 256x256 pixels.
 
             </p>
             <div style="display: flex;">
@@ -138,7 +138,7 @@
                 </div>
             </div>
             <p class="section-text">
-                We also performed random rotations on our training dataset to let our model be rotation invariant. With our Pytorch compose method, we used a random rotate on the images on the training dataset so or CNN will be fed randomly rotated images. Here is an example of a rotated image from the transformed training dataset.
+                We also performed random rotations on our training dataset to let our model be rotation invariant. With our PyTorch compose method, we used a random rotate on the images on the training dataset so or CNN will be fed randomly rotated images. Here is an example of a rotated image from the transformed training dataset.
             </p>
             <div style="display: flex; align-items: center;">
                 <div>
@@ -152,7 +152,7 @@
                 Initial Model Selection & Definition
             </h2>
             <p class="section-text">
-                We wanted to used a pretrained model to aid in our classification so we needed to choose a model from one of Pytorch's available models. Unsure of which one to go with, we decided to go start with Resnet50 as it was highly acclaimed and with 50 layers and pretraining of over a million images, we thought this would be a good starting spot.
+                We wanted to used a pretrained model to aid in our classification so we needed to choose a model from one of PyTorch's available models. Unsure of which one to go with, we decided to go start with Resnet50 as it was highly acclaimed and with 50 layers and pretraining of over a million images, we thought this would be a good starting spot.
 
                 <br/>
 
@@ -321,11 +321,15 @@
                 Results
             </h2>
             <p class="section-text">
-                Now that we had narrowed down our model to <strong>wide resnet-50</strong>. We performed a series of training sessions on the model with varying epochs. We had gotten our model up to a ___% accurracy and now we tested it. We used our testing dataset consisting of 5300 images and achieved a 86% accuracy rate.  
+                Now that we had narrowed down our model to <strong>wide resnet-50</strong>. We performed a series of training sessions on the model with varying epochs. We had gotten our model up to a training accurracy of <strong>87.3%</strong> and now we tested it. We used our testing dataset consisting of 5300 images and looped through each image in the dataset and had the model predict the breed. Out of <strong>5300</strong> images, the model correctly predicted <strong>4579</strong> images which is a testing accuracy of <strong>86.4%</strong>.  
                 <br/></br>
-                We can visualize our model making predictions in the image grid below. We can see that the model correctly predicted each of the below dog breeds in the images below. It can event predict dog breeds when images have other objects like humans. 
+                We can visualize our model making predictions in the image grid below. The images predicted here are from the test dataset, and the model has not been trained on these images. We can see that the model nearly correctly predicted each of the below dog breeds in the images below. It can event predict dog breeds when images have other objects like humans. 
             </p>
-
+            <img src="./results-1.png" style="width: 100%; margin-top: 1rem;" alt="Model Results">
+            <img src="./results-2.png" style="width: 100%; margin-top: 1rem;" alt="Model Results">
+            <p class="section-text">
+                Great! Our model was able to predict dogs in images like the Clumber on the last row even with a person taking up a majority of the photo. It seems like our model was a success!
+            </p>
             <p class="section-text">Now that we were happy about how we tuned and trained the model, we wanted to make it accessible people to choose their own images for our model predictions.</p>
         </section>
 
@@ -336,7 +340,7 @@
             <p class="section-text">
                 While we had our model on Google Colab, we wanted users to be able to interact with our model and load their own images to test. We decided to use Flask to deploy a simple web server on Heroku to host our model logic. We built a very simple UI that allows a user to provide a link to an image or upload their own image. The image will then be sent to our model and it will make a prediction.
                 <br/><br/>
-                We had to figure out how to host our model on Heroku without requiring a user to download large files when loading a web app. We decided to train a web specific model using densenet which was only 20mb in syze compared to 260 mb from the resnet model. Because of this, the web accuracy model would only be 79% instead of the __% we achieved using wide resnet. We then used the pickle library to serialize and compress our model that heroku could then load. We also ran into memory errors trying this due to Pytorch's library being too large. We solved this by finding a cpu specific Pytorch library which reduce the server size by several hundred mb. With these fixes we were able to deploy a very simple web version of our model, which you can see below. 
+                We had to figure out how to host our model on Heroku without requiring a user to download large files when loading a web app. We decided to train a web specific model using densenet which was only 20mb in syze compared to 260 mb from the resnet model. Because of this, the web accuracy model would only be 79% instead of the __% we achieved using wide resnet. We then used the pickle library to serialize and compress our model that heroku could then load. We also ran into memory errors trying this due to PyTorch's library being too large. We solved this by finding a cpu specific PyTorch library which reduce the server size by several hundred mb. With these fixes we were able to deploy a very simple web version of our model, which you can see below. 
                 You can visit the site on <a class="link" href="https://ml-dog-breed-classifier.herokuapp.com/">ml-dog-breed-classifier.herokuapp.com</a>.
             </p>
 
@@ -353,7 +357,7 @@
                         When we first started we loaded a pretrained model and didn't realize we needed to replace the last layer in the model. This led us to looking through StackOverflow until we realized we needed to overwrite the last layer.
                     </p>
                     <p class="section-text">
-                        We also ran into ours during our model building/training process because our images weren't the same size. We had to research how we could resize the entire dataset to get our CNN to function, and we had to discover the Pytorch transform resize() method to do this.
+                        We also ran into ours during our model building/training process because our images weren't the same size. We had to research how we could resize the entire dataset to get our CNN to function, and we had to discover the PyTorch transform resize() method to do this.
                     </p>
                     <p class="section-text">
                         Memory errors. We often ran into cuda memory errors due to bad parameters or batches that were too big. This led to us refining our parameters often.
@@ -368,7 +372,7 @@
                 <h3>Takeaways</h3>
                 <div class="pad-left">
                     <p class="section-text">
-                        Overall, this project was full of learning. We got experience cleaning data with python, creating datasets, discovering new models, and learning about how to finetune parameters. We learned about the utilties of the Pytorch library and how to quickly build a ML model using their pretrained models. We also gained experience with Flask and deployments, and how to compress fully built models into a pickle format for deployment.
+                        Overall, this project was full of learning. We got experience cleaning data with python, creating datasets, discovering new models, and learning about how to finetune parameters. We learned about the utilties of the PyTorch library and how to quickly build a ML model using their pretrained models. We also gained experience with Flask and deployments, and how to compress fully built models into a pickle format for deployment.
                     </p>
                 </div>                
             </p>
