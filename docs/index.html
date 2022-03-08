@@ -11,19 +11,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700;900&display=swap"
         rel="stylesheet">
 
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
 <body>
     <header class="header">
         <div class="container">
             <div class="header-row">
                 <div class="header-row-item">
-                    <h1 class="header-title">Building a Bird Species Classifier</h1>
-                    <p class="header-p">A writeup on the problem, approach, datasets, and results on classifying bird
-                        species using PyTorch.</p>
+                    <h1 class="header-title">Classifying Dog Breeds</h1>
+                    <p class="header-p">A writeup on the problem, approach, datasets, and results classifying dogs with Pytorch.</p>
                     <p class="header-p">By Yodahe and Camden</p>
                 </div>
                 <div class="header-right">
                     <!-- <img class="header-img" src="https://miro.medium.com/max/640/1*cY9AOTe3vjlerL73ItnfTg.jpeg" alt=""> -->
-                    <img class="header-img" src="./bird.png" alt="">
+                    <img class="header-img"
+                        src="https://www.hepper.com/wp-content/uploads/2021/11/golden-retriever_Olena-Brodetska_Shutterstock.jpg"
+                        alt="">
                 </div>
             </div>
 
@@ -35,8 +42,7 @@
                 Project Video
             </h2>
             <p class="section-text">
-                <video controls width="250" controls
-                    poster="https://static.scientificamerican.com/sciam/cache/file/21081E18-3429-4F3A-9A65538930B91BE2.jpg">
+                <video controls width="250" controls poster="">
 
                     <source src="https://archive.org/download/ElephantsDream/ed_hd.ogv" type="video/mp4">
 
@@ -48,55 +54,198 @@
 
         <section>
             <h2 class="section-header">
-                Problem Description
+                Problem And Motivation
             </h2>
             <p class="section-text">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde corrupti provident officiis repellendus
-                iusto neque molestias, ipsam laborum voluptatem laudantium voluptatibus eum officia quis eveniet esse
-                quod fugit? Magnam, pariatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed earum
-                repellat itaque nobis laboriosam, minima, ipsam doloremque magnam dicta animi quae et at hic. Fuga
-                repellendus itaque labore cumque voluptatum!
+                Classification has become quite popular in Computer Vision, and being able to classify objects has
+                become much more feasible in recent years.
+                Have you ever strolled through a dog park and seen an unusual dog but have no idea what breed that dog
+                may be? With so many different dog breeds
+                today it's hard to stay in the know. You may see a dog that really captures your attention with it's
+                majestic coat or it's calming tempermaent, but you may
+                be unsure of it's temperament.
+
+                In our project we will be focusing on creating a Convolutional Neural Net model to be able to classify a
+                dog's breed from an image. We want to attempt to solve this problem by being able to classify a dog's
+                breed by just analyzing an image.
+
+
             </p>
         </section>
 
-
-        <section>
-            <h2 class="section-header">
-                Previous Work
-            </h2>
-            <p class="section-text">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, deserunt commodi placeat iusto sapiente
-                cumque, excepturi et accusamus quod, quia perferendis cum. Dolorem nobis deleniti impedit consequatur
-                suscipit rerum sint! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, accusamus sequi
-                consequuntur repudiandae tempore explicabo fuga autem beatae sapiente quisquam. Maxime natus quis quia
-                cupiditate neque iste distinctio rerum. Sequi? Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Ipsa sunt laboriosam earum in! Nemo impedit tempore voluptatem. Magni a consequatur nihil dignissimos
-                accusamus, corporis soluta voluptatibus quae suscipit aperiam nostrum?
-
-            </p>
-        </section>
 
         <section>
             <h2 class="section-header">
                 Our Approach
             </h2>
             <p class="section-text">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Placeat molestias suscipit minus numquam
-                quibusdam impedit vel natus enim, nemo est delectus ullam quos quia dolorum non voluptas perspiciatis!
-                Voluptate, id?
+                Our approach is to leverage the Pytorch library by using the utility functions for creating datasets like ImageFolder, DataLoader, Image Tensors, Transforms and more. We also want to utilize their pretrained models so we can hit the floor running with our dog breed classifications. By leveraging a pretrained model we can take advantage of a model that has already been trained on over a million images and specially crafted model layers. We will spend more of our time fine tuning the model by focusing on selecting the correct parameters and preparing the data to perform the dog classification training.
             </p>
         </section>
 
         <section>
             <h2 class="section-header">
-                Datasets
+                Datasets & Cleaning
             </h2>
             <p class="section-text">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet adipisci voluptates, rem quaerat mollitia
-                veritatis tenetur eos reiciendis, ab voluptatibus dignissimos incidunt repellat explicabo dolorem, autem
-                veniam? Laudantium, recusandae doloribus. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Repellat ex sed hic fugiat, cumque quas ullam iusto quis natus fuga ad tenetur aut praesentium porro
-                perspiciatis vel deserunt sunt commodi.
+                The dataset we used was the <a class="link"
+                    href="http://vision.stanford.edu/aditya86/ImageNetDogs/">Stanford Dogs Dataset</a> It contains
+                images of 120 breeds of dogs from around the world. The dataset contains 20,580 images.
+                <br /><br />
+                The dataset contained a folder for each breed prepended with some hash like "n02086240-German_shepherd".
+                To create our labels we looped through the directory and eliminated the prepending string and deleted
+                underscores to get "German Shepherd" and appended this to a labels array. We now had an array of labels
+                containg every dog breed within the dataset. Here is a preview of the first 20 labels. (To view the full labels please view the   <a class="link" href="https://colab.research.google.com/drive/1GomG8GxtTg6NCnP06Kl2pIZRXxcI84k9#scrollTo=GLaW04i26gna">Colab Notebook</a>)
+                <br/>
+                <code style="display: block; padding: 0.25rem; margin-top: 0.5rem; background: #eee;">['Chihuahua', 'Japanese spaniel', 'Maltese dog', 'Pekinese', 'Shih Tzu', 'Blenheim spaniel',
+                    'papillon', 'toy terrier', 'Rhodesian ridgeback', 'Afghan hound', 'basset', 'beagle', 'bloodhound',
+                    'bluetick', 'black and tan coonhound', 'Walker hound', 'English foxhound', 'redbone', 'borzoi',
+                    'Irish wolfhound', ...]
+                </code>
+                <br />
+                The dataset did not come with train, valid, and test folders so we had to create our own. We chose to
+                use 25% of the images in the dataset as testing images, and leveraged Pytorch's random_split method to
+                create a test dataset consisting of 5300 images, a valid dataset consisting of 1440 images, and train
+                dataset consisting of 13840 images.
+
+                <br /></br>
+                The images contained within the dataset were not sized the same, and because we wanted to use a CNN model we needed to ensure they had the same dimensions. Pytorch's ImageFolder method 
+                takes a transform argument which transforms each image in the folder. We use Pytorch's Compose utility to transform each image into a Tensor and then resized the image to 256x256 pixels.
+                <div style="display: flex; align-items: center;">
+                    <div>
+                        <h3>Before</h3>
+                        <img src="./dog-before.png" class="resize-img"/>
+                    </div>
+                    <div>
+                        <h3>After</h3>
+                        <img src="./dog-before.png" class="resize-img"/>
+                    </div>
+                </div>
+            </p>
+        </section>
+
+        <section>
+            <h2 class="section-header">
+                Initial Model Selection & Definition
+            </h2>
+            <p class="section-text">
+                We wanted to used a pretrained model to aid in our classification so we needed to choose a model from one of Pytorch's available models. Unsure of which one to go with, we decided to go start with Resnet50 as it was highly acclaimed and with 50 layers and pretraining of over a million images, we thought this would be a good starting spot.
+
+                <br/>
+
+                Following some references we found online, we needed to create an ImageClassificationBase class which would be a super class of the pretrained model. We then created a class PretrainedResnetModel in which we overwrote the last layer in the model. We use a sequential layer where we took in the previous layer output and outputted 120 (the number of dog breeds). We then took the LogSoftMax to convert the output into a probability distribution.
+
+            </p>
+        </section>
+        
+
+
+        <section>
+            <h2 class="section-header">
+                Choosing Parameters
+            </h2>
+            <p class="section-text">
+                Each time our model trains, it will be getting a batch from a dataset which we have configured to be 64 images. Which you can see below.
+            </p>
+            <img class="batch-img" src="./batch.png"/>
+
+            <p class="section-text">
+                We had to choose several parameters when training our model such as the learning rate, epochs, weight decay, and an optimization function. We decided to use a trial and error approach to determine what parameters we should use. We put the results of our investigation into the table below. 
+            </p>
+            <table>
+                <thead>
+                    <th>Num Epochs</th>
+                    <th>Learning Rate</th>
+                    <th>Weight Decay</th>
+                    <th>Optimization Function</th>
+                    <th>Accuracy</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>5</td>
+                        <td>0.1</td>
+                        <td>0.0001</td>
+                        <td>torch.optim.SGD</td>
+                        <td>90%</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>0.1</td>
+                        <td>0.0001</td>
+                        <td>torch.optim.SGD</td>
+                        <td>81%</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>0.1</td>
+                        <td>0.0001</td>
+                        <td>torch.optim.SGD</td>
+                        <td>88%</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>0.1</td>
+                        <td>0.0001</td>
+                        <td>torch.optim.SGD</td>
+                        <td>83%</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>0.1</td>
+                        <td>0.0001</td>
+                        <td>torch.optim.SGD</td>
+                        <td>85%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="section-text">
+                After our trial and error sessions, we decided to start our parameters at with a learning rate of <strong>0.01</strong>, a weight decay of <strong>0.0001</strong>, and a <strong>torch.optim.SGD</strong> optomizer. After running 15 epochs, our accuracy rate was at 88%.
+
+            </p>
+        </section>
+
+        <section>
+            <h2 class="section-header">
+                Trying Other Models
+            </h2>
+            <p class="section-text">
+               We decided to try three other models to compare our results with. We chose GoogleNet, VGG16, InceptionV3 to test. After hours of training we have put the results in a table below.
+            </p>
+
+            <p class="section-text">
+                We had to choose several parameters when training our model such as the learning rate, epochs, weight decay, and an optimization function. We decided to use a trial and error approach to determine what parameters we should use. We put the results of our investigation into the table below. 
+            </p>
+            <table>
+                <thead>
+                    <th>Model</th>
+                    <th>Num Epochs</th>
+                    <th>Accuracy</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ResNet50</td>
+                        <td>10</td>
+                        <td>90%</td>
+                    </tr>
+                    <tr>
+                        <td>GoogleNet</td>
+                        <td>10</td>
+                        <td>81%</td>
+                    </tr>
+                    <tr>
+                        <td>VGG16</td>
+                        <td>10</td>
+                        <td>88%</td>
+                    </tr>
+                    <tr>
+                        <td>InceptionV3</td>
+                        <td>10</td>
+                        <td>83%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="section-text">
+                After these tests, our best performing model was ___________
             </p>
         </section>
 
@@ -116,10 +265,30 @@
                 Dicussion
             </h2>
             <p class="section-text">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet molestiae fugit, aperiam vero ea ullam,
-                dolores nostrum voluptatibus sit distinctio vel, obcaecati modi quas quis nemo reprehenderit cupiditate
-                repudiandae id.
+                <h3>Problems Encountered</h3>
+                <div class="pad-left">
+                    <p class="section-text">
+                        When we first started we loaded a pretrained model and didn't realize we needed to replace the last layer in the model. This led us to looking through StackOverflow until we realized we needed to overwrite the last layer.
+                    </p>
+                </div>
+                <h3>Next Steps</h3>
+                <div class="pad-left">
+                    <p class="section-text">
+                        Our next steps would be to create a UI for users where they could upload their own images, and we could run our model on the image and predict the dog breed. We could create a User Interface using Flask, and also train our model on any image uploads we receive. Allowing us to improve our model and help people discover what dog they saw.
+                    </p>
+                </div>              
             </p>
+        </section>
+        <section>
+            <h2 class="section-header">
+                References
+            </h2>
+                <a class="link d-block my-1" href="#">Some Link Here</a>  
+                <a class="link d-block my-1" href="#">Some Link Here</a>  
+                <a class="link d-block my-1" href="#">Some Link Here</a>  
+                <a class="link d-block my-1" href="#">Some Link Here</a>  
+
+        </p>
         </section>
     </main>
 </body>

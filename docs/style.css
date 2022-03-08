@@ -5,8 +5,7 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Fira Sans', sans-serif;
-}
+    font-family: 'Poppins', sans-serif;}
 
 h1 {
     margin: 2rem 0;
@@ -20,6 +19,10 @@ h3 {
     margin: 1.5rem 0;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    color: #333;;
+}
+
 
 .header {
     padding: 8rem 0 8rem 0;
@@ -29,12 +32,17 @@ h3 {
 
 .header-row {
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
+    grid-template-columns: 2fr 1fr;
 }
 
 .header-row-item {
     width: 80%;
     grid-column-start: 1;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
 }
 
 
@@ -44,6 +52,7 @@ h3 {
     line-height: 1.5;
     font-size: 48px;
     font-weight: 800;
+    color: #fff;
 }
 
 .header-p {
@@ -75,10 +84,12 @@ section {
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 1rem;
+    color: #333;
 }
 
 .section-text {
     line-height: 2;
+    color: rgb(102, 102, 102);
 }
 
 video {
@@ -87,4 +98,49 @@ video {
     padding: 15px;
     background: #000;
     min-height: 600px;
+}
+
+.resize-img {
+    display: block;
+    margin-right: 5rem;
+}
+
+.pad-left {
+    padding-left: 2rem;
+}
+
+
+table {
+    padding: 1rem;
+    color: #333;
+    width: 100%;
+}
+
+th, td {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:nth-child(even) {
+    /* background-color: #eee; */
+}
+
+.d-block {
+    display: block;
+}
+
+.my-1 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.link {
+    text-decoration: none;
+    color: #1976d2;
+    max-width: 200px;
 }
