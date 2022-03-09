@@ -109,12 +109,12 @@
                 The dataset contained a folder for each breed prepended with some hash like "n02086240-German_shepherd".
                 To create our labels we looped through the directory and eliminated the prepending string and deleted
                 underscores to get "German Shepherd" and appended this to a labels array. We now had an array of labels
-                containg every dog breed within the dataset. Here is a preview of the first 20 labels. (To view the full labels please view the   <a class="link" href="https://colab.research.google.com/drive/1GomG8GxtTg6NCnP06Kl2pIZRXxcI84k9#scrollTo=GLaW04i26gna">Colab Notebook</a>)
+                containing every dog breed within the dataset. Here is a preview of the first 20 labels. (To view the full labels please view the   <a class="link" href="https://colab.research.google.com/drive/1GomG8GxtTg6NCnP06Kl2pIZRXxcI84k9#scrollTo=GLaW04i26gna">Colab Notebook</a>)
                 <br/>
-                <code style="display: block; padding: 0.25rem; margin-top: 0.5rem; background: #eee;">['Chihuahua', 'Japanese spaniel', 'Maltese dog', 'Pekinese', 'Shih Tzu', 'Blenheim spaniel',
-                    'papillon', 'toy terrier', 'Rhodesian ridgeback', 'Afghan hound', 'basset', 'beagle', 'bloodhound',
-                    'bluetick', 'black and tan coonhound', 'Walker hound', 'English foxhound', 'redbone', 'borzoi',
-                    'Irish wolfhound', ...]
+                <code style="display: block; padding: 0.25rem; margin-top: 0.5rem; background: #eee;">['Chihuahua', 'Japanese Spaniel', 'Maltese Dog', 'Pekinese', 'Shih Tzu', 'Blenheim Spaniel',
+                    'Papillon', 'Toy Terrier', 'Rhodesian Ridgeback', 'Afghan Hound', 'Basset', 'Beagle', 'Bloodhound',
+                    'Bluetick', 'Black And Tan Coonhound', 'Walker Hound', 'English foxhound', 'Redbone', 'Borzoi',
+                    'Irish Wolfhound'
                 </code>
                 <br />
                 The dataset did not come with train, valid, and test folders so we had to create our own. We chose to
@@ -338,7 +338,7 @@
                 Simple Web Deployment
             </h2>
             <p class="section-text">
-                While we had our model on Google Colab, we wanted users to be able to interact with our model and load their own images to test. We decided to use Flask to deploy a simple web server on Heroku to host our model logic. We built a very simple UI that allows a user to provide a link to an image or upload their own image. The image will then be sent to our model and it will make a prediction.
+                While we had our model on Google Collab, we wanted users to be able to interact with our model and load their own images to test. We decided to use Flask to deploy a simple web server on Heroku to host our model logic. We built a very simple UI that allows a user to provide a link to an image or upload their own image. The image will then be sent to our model and it will make a prediction.
                 <br/><br/>
                 We had to figure out how to host our model on Heroku without requiring a user to download large files when loading a web app. We decided to train a web specific model using GoogleNet which was only 20mb in syze compared to 260 mb from the resnet model. Because of this, the web accuracy model would only be 79% instead of the __% we achieved using wide resnet. We then used the pickle library to serialize and compress our model that heroku could then load. We also ran into memory errors trying this due to PyTorch's library being too large. We solved this by finding a cpu specific PyTorch library which reduce the server size by several hundred mb. With these fixes we were able to deploy a very simple web version of our model, which you can see below. 
                 You can visit the site on <a class="link" href="https://ml-dog-breed-classifier.herokuapp.com/">ml-dog-breed-classifier.herokuapp.com</a>.
@@ -348,7 +348,7 @@
         </section>
         <section>
             <h2 class="section-header">
-                Dicussion
+                Discussion
             </h2>
             <p class="section-text">
                 <h3>Problems Encountered</h3>
